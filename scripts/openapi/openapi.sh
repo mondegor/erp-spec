@@ -4,6 +4,7 @@ readonly OPENAPI_NAME="ERP API"
 readonly OPENAPI_VARS=(
   "OPENAPI_SPEC_DIR"
   "OPENAPI_ASSEMBLY_DIR"
+  "OPENAPI_SERVICE_FILE_POSTFIX"
   "OPENAPI_SERVICE_CLIENT_AUTH"
 )
 
@@ -11,6 +12,7 @@ readonly OPENAPI_VARS=(
 readonly OPENAPI_VARS_DEFAULT=(
   "${APPX_DIR}/src"
   "${APPX_DIR}/assembly"
+  "_openapi.yaml"
   "client/auth"
 )
 
@@ -41,7 +43,7 @@ function mrcmd_plugins_openapi_method_exec() {
 
     gen-client-auth)
       local serviceSrc="${OPENAPI_SPEC_DIR}/${OPENAPI_SERVICE_CLIENT_AUTH}"
-      local destFilePath="${OPENAPI_ASSEMBLY_DIR}/${OPENAPI_SERVICE_CLIENT_AUTH}_openapi.yaml"
+      local destFilePath="${OPENAPI_ASSEMBLY_DIR}/${OPENAPI_SERVICE_CLIENT_AUTH}${OPENAPI_SERVICE_FILE_POSTFIX}"
       mrcmd_plugins_call_function "openapi/gen-client-auth" "${commonSrc}" "${serviceSrc}" "${destFilePath}"
       ;;
 
