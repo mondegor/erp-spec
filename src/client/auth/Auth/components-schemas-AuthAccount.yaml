@@ -1,0 +1,9 @@
+Auth.Request.Model.AuthAccount:
+  type: object
+  required:
+    - userLogin
+  properties:
+    userLogin:
+      description: Логин/емаил привязаный к аккаунту пользователя
+      type: string
+      example: "user-email@localhost"

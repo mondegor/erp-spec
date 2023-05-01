@@ -1,0 +1,33 @@
+Auth.Change.Request.Model.ChangeLogin:
+  type: object
+  required:
+    - newLogin
+  properties:
+    newLogin:
+      description: Новый логин пользователя
+      type: string
+      example: "new-user-login"
+
+Auth.Change.Request.Model.ChangePin:
+  type: object
+  required:
+    - newPin
+  properties:
+    newPin:
+      description: Новый PIN-код пользователя
+      type: string
+      example: "3344"
+    currentPin:
+      description: Текущий PIN-код пользователя
+      type: string
+      example: "2233"
+
+Auth.Change.Request.Model.ChangeEmail:
+  type: object
+  required:
+    - newEmail
+  properties:
+    newEmail:
+      description: Новый емаил пользователя
+      type: string
+      example: "new-user-email@localhost"

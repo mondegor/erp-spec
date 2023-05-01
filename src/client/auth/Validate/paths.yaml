@@ -1,0 +1,27 @@
+/v1/auth/login-check:
+  post:
+    summary: Метод проверяет не занят ли уже логин/емаил
+    description: Метод предназначен для проверки того, что указанный логин/емаил ещё не привязан к какому-либо аккаунту
+    operationId: checkLogin
+    tags:
+      - Auth.Validate
+
+    parameters:
+      - $ref: "#/components/parameters/App.Request.Header.acceptLanguage"
+      - $ref: "#/components/parameters/App.Request.Header.correlationId"
+
+    requestBody:
+      required: true
+      content:
+        application/json;charset=UTF-8:
+          schema:
+            $ref: "#/components/schemas/App.Request.Model.ValidateStringValue"
+
+    responses:
+      "204":
+        description: Указанный логин/емаил свободен
+      "400": # Логин/емаил должен быть указан
+             # Логин/емаил некорректен или уже привязан к другому аккаунту
+        $ref: "#/components/responses/App.Response.Error400"
+      "500":
+        $ref: "#/components/responses/App.Response.Error5XX"

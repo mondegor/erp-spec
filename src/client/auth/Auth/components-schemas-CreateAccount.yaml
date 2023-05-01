@@ -1,0 +1,9 @@
+Auth.Request.Model.CreateAccount:
+  type: object
+  required:
+    - userEmail
+  properties:
+    userEmail:
+      description: Емаил пользователя являющийся одновременно и логином, к которому будет привязан созданный аккаунт
+      type: string
+      example: "user-email@localhost"

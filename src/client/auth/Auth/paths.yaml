@@ -1,0 +1,141 @@
+/v1/signup:
+  post:
+    summary: Метод создания аккаунта пользователя
+    description: Метод предназначен для создания в БД нового аккаунта с уникальным логином пользователя
+    operationId: createAccount
+    tags:
+      - Auth
+
+    parameters:
+      - $ref: "#/components/parameters/App.Request.Header.acceptLanguage"
+      - $ref: "#/components/parameters/App.Request.Header.correlationId"
+      - $ref: "#/components/parameters/App.Request.Header.platform"
+
+    requestBody:
+      required: true
+      content:
+        application/json;charset=UTF-8:
+          schema:
+            $ref: "#/components/schemas/Auth.Request.Model.CreateAccount"
+
+    responses:
+      "202": # На емаил было отправлено сообщение с кодом подтверждения создания аккаунта
+        $ref: "#/components/responses/Auth.Response.WaitingAccessAccount"
+      "400": # Логин/емаил должен быть указан
+             # Логин/емаил некорректен или уже привязан к другому аккаунту
+        $ref: "#/components/responses/App.Response.Error400"
+      "403":
+        $ref: "#/components/responses/App.Response.Error403"
+      "500":
+        $ref: "#/components/responses/App.Response.Error5XX"
+
+/v1/signin:
+  post:
+    summary: Метод получения доступа к аккаунту пользователя
+    description: Метод предназначен для аутентификации пользователя под указанным логином соответствующим аккаунту в БД
+    operationId: authAccount
+    tags:
+      - Auth
+
+    parameters:
+      - $ref: "#/components/parameters/App.Request.Header.acceptLanguage"
+      - $ref: "#/components/parameters/App.Request.Header.correlationId"
+      - $ref: "#/components/parameters/App.Request.Header.platform"
+
+    requestBody:
+      required: true
+      content:
+        application/json;charset=UTF-8:
+          schema:
+            $ref: "#/components/schemas/Auth.Request.Model.AuthAccount"
+
+    responses:
+      "202": # На емаил было отправлено сообщение с кодом подтверждения входа в свой аккаунт
+        $ref: "#/components/responses/Auth.Response.WaitingAccessAccount"
+      "400": # Логин/емаил должен быть указан
+             # Логин/емаил некорректен или не существует
+        $ref: "#/components/responses/App.Response.Error400"
+      "403":
+        $ref: "#/components/responses/App.Response.Error403"
+      "500":
+        $ref: "#/components/responses/App.Response.Error5XX"
+
+/v1/auth:
+  get:
+    summary: Метод получения информации об аккаунте
+    description: Метод предназначен для получения информации из БД об аккаунте текущего пользователя
+    operationId: getAccount
+    tags:
+      - Auth
+
+    security:
+      - bearerAuth: []
+
+    parameters:
+      - $ref: "#/components/parameters/App.Request.Header.acceptLanguage"
+      - $ref: "#/components/parameters/App.Request.Header.correlationId"
+
+    responses:
+      "200":
+        description: Сформирован ответ с информацией об аккаунте текущего пользователя
+        content:
+          application/json;charset=UTF-8:
+            schema:
+              $ref: "#/components/schemas/Auth.Response.Model.Account"
+      "401":
+        $ref: "#/components/responses/App.Response.Error401"
+      "500":
+        $ref: "#/components/responses/App.Response.Error5XX"
+
+  post:
+    summary: Метод генерации новых access и refresh токенов
+    description: Метод предназначен для генерации новых access и refresh токенов по указанному refresh токену
+    operationId: generateAccessTokens
+    tags:
+      - Auth
+
+    security:
+      - bearerAuth: []
+
+    parameters:
+      - $ref: "#/components/parameters/App.Request.Header.acceptLanguage"
+      - $ref: "#/components/parameters/App.Request.Header.correlationId"
+      - $ref: "#/components/parameters/App.Request.Header.platform"
+      - $ref: "#/components/parameters/Auth.Request.Query.Mobile.refreshToken"
+      - $ref: "#/components/parameters/Auth.Request.Cookie.Web.refreshToken"
+
+    responses:
+      "201": # Refresh и Access токены перегенерированы
+        $ref: "#/components/responses/Auth.Response.SuccessAccessAccount"
+      "400": # Refresh токен должен быть указан
+             # Refresh токен некорректен или недействителен
+        $ref: "#/components/responses/App.Response.Error400"
+      "401":
+        $ref: "#/components/responses/App.Response.Error401"
+      "500":
+        $ref: "#/components/responses/App.Response.Error5XX"
+
+/v1/auth/{operationToken}:
+  post:
+    summary: Метод генерации access и refresh токенов по токену операции
+    description: Метод предназначен для генерации access и refresh токенов по указанному токену операции
+    operationId: generateAccessTokensByToken
+    tags:
+      - Auth
+
+    parameters:
+      - $ref: "#/components/parameters/App.Request.Header.acceptLanguage"
+      - $ref: "#/components/parameters/App.Request.Header.correlationId"
+      - $ref: "#/components/parameters/App.Request.Header.platform"
+      - $ref: "#/components/parameters/Auth.Operations.Request.Path.operationToken"
+
+    responses:
+      "201": # Refresh и Access токены сгенерированы на основе токена операции
+        $ref: "#/components/responses/Auth.Response.SuccessAccessAccount"
+      "400": # Токен операции должен быть указан
+             # Токен операции некорректен или недействителен
+        $ref: "#/components/responses/App.Response.Error400"
+      "403":
+        $ref: "#/components/responses/App.Response.Error403"
+      "500":
+        $ref: "#/components/responses/App.Response.Error5XX"

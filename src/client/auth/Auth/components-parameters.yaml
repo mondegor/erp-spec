@@ -1,0 +1,15 @@
+Auth.Request.Query.Mobile.refreshToken:
+  name: refreshToken
+  in: query
+  schema:
+    description: Используется платформой MOBILE
+    type: string
+  example: "02fb5463db25b91568a1801dc0974b1d50cb1f3bc817f2be3a4b357929cee704"
+
+Auth.Request.Cookie.Web.refreshToken:
+  name: RTID
+  in: cookie
+  schema:
+    description: Используется платформой WEB
+    type: string
+  example: "02fb5463db25b91568a1801dc0974b1d50cb1f3bc817f2be3a4b357929cee704"

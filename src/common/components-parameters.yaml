@@ -1,0 +1,25 @@
+App.Request.Header.acceptLanguage:
+  description: https://developer.mozilla.org/ru/docs/Web/HTTP/Headers/Accept-Language
+  name: Accept-Language
+  in: header
+  schema:
+    type: string
+  example: "rus,en;q=0.5"
+
+App.Request.Header.correlationId:
+  name: CorrelationID
+  in: header
+  schema:
+    type: string
+  example: "02fa8b1f-672503f2-5add1be1-90ab5d42"
+
+App.Request.Header.platform:
+  name: Platform
+  in: header
+  schema:
+    description: Платформа, которая использует данное API. По умолчанию WEB
+    type: string
+    enum:
+      - MOBILE
+      - WEB
+  example: WEB
