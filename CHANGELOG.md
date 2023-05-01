@@ -1,4 +1,4 @@
-# Erp Spec Changelog
+# ERP REST API Changelog
 
 Все изменения в API спецификации будут документироваться на этой странице.
 
