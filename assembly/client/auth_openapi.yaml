@@ -1,7 +1,14 @@
+---
 openapi: 3.0.3
 info:
-  title: User Authentication Service API
-  version: 1.0.0
+  version: 0.1.0
+  title: ERP REST API
+  description: REST API для ERP в формате OpenAPI v3.
+  license:
+    name: Apache-2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0
+  contact:
+    name: Nazarov Andrey
 servers:
   - url: http://localhost:8080
     description: Dev Server
